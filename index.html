@@ -38,6 +38,10 @@
   --near:#141210; --near-2:#221F1B;
   --ink-2:#6B6259; --ink-3:#6E665C;   /* era #8C8378 = 3,3:1. Agora 5,02:1 */
   --accent:#944E4D;
+  /* O acento foi escolhido contra o marfim e nunca contra o preto: sobre
+     #141210 ele dá 3,11:1 e as estrelas ficam turvas. Esta é a versão dele
+     para fundo escuro — 5,29:1, mesma família. Mesmo padrão de --on-dark. */
+  --accent-dark:#BE7370;
   --ease-out:cubic-bezier(0.23, 1, 0.32, 1);   /* a curva da tabela, nao aproximada */
   /* o capítulo escuro era um segundo tema informal, sem token nenhum */
   --on-dark:#F4EFE6; --on-dark-2:#D2C9BE; --on-dark-3:#BCB2A6; --dark-rule:#3E382F;
@@ -278,8 +282,42 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
   font-size:19.5px; line-height:1.68; color:var(--on-dark); letter-spacing:.004em;
   max-width:68ch}
 .dark blockquote cite{display:block; margin-top:15px; font-style:normal; font-family:"Barlow Condensed",sans-serif; font-size:13.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--on-dark-3)}
-.qgrid{display:grid; gap:30px; margin-top:38px}
-@media (min-width:800px){ .qgrid{grid-template-columns:repeat(2,1fr)} }
+/* O número é o ativo, então o número é que fica grande. E a ressalva das
+   duas avaliações de 1 estrela vira uma lasca visível na barra em vez de
+   uma frase pedindo desculpa: gráfico que mostra o próprio defeito lê como
+   dado, parede só de elogio lê como escolhido a dedo. */
+.pcorpo{display:grid; gap:44px; margin-top:38px}
+@media (min-width:940px){ .pcorpo{grid-template-columns:340px 1fr; gap:64px; align-items:start} }
+.placar b{display:block; font-family:Prata,serif; font-weight:400;
+  font-size:clamp(62px,8.4vw,92px); line-height:.9; color:var(--on-dark);
+  font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+.estrelas{display:flex; gap:3px; align-items:center; margin-top:15px}
+.estrelas svg{width:21px; height:21px; flex:none; fill:var(--accent-dark)}
+/* 4,9 não são cinco estrelas cheias. A quinta enche 90%, que é o que o
+   número diz. Arredondar para cima aqui seria mentir de graça. */
+.estrelas .parcial{fill:url(#est90)}
+#est90 stop:first-child{stop-color:var(--accent-dark)}
+#est90 stop:last-child{stop-color:var(--dark-rule)}
+.placar .fonte{margin-top:13px; font-family:"Barlow Condensed",sans-serif;
+  font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--on-dark-3)}
+.barras{margin-top:28px; display:grid; gap:9px}
+.linha{display:grid; grid-template-columns:34px 1fr 30px; gap:11px; align-items:center;
+  font-family:"Barlow Condensed",sans-serif; font-size:13.5px; letter-spacing:.08em;
+  color:var(--on-dark-2); font-variant-numeric:tabular-nums}
+.linha.vazia{color:var(--on-dark-3)}
+.trilho{height:9px; background:var(--dark-rule)}
+.barra{height:100%; background:var(--accent-dark)}
+.qtd{text-align:right}
+.segunda{margin-top:26px; padding-top:22px; border-top:1px solid var(--dark-rule)}
+.segunda b{font-size:32px}
+.segunda span{display:block; margin-top:9px; font-family:"Barlow Condensed",sans-serif;
+  font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--on-dark-3)}
+.segunda span + span{margin-top:4px}
+.citacoes{display:grid; gap:30px}
+.citacoes blockquote:first-child{padding-top:0; border-top:0}
+.citacoes blockquote:first-child p{font-size:23px; line-height:1.5}
+.rodape-honesto{margin-top:44px; padding-top:20px; border-top:1px solid var(--dark-rule);
+  font-size:15px; color:var(--on-dark-3); max-width:66ch}
 
 /* ---- localização ---- */
 .loc{display:grid; gap:0; border:1px solid var(--hair)}
@@ -508,14 +546,42 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
 
 <section class="dark">
   <div class="wrap">
-    <h2>Sixty one reviews. Fifty eight of them five stars.</h2>
-    <p class="lede" style="margin-top:14px">Copied word for word from Google. Two of the sixty one are one star, and this page is not pretending otherwise.</p>
-    <div class="qgrid">
-      <blockquote><p>“Lorant and his wife Anara are absolutely outstanding at what they do… I have tried massage therapies in Thailand, Edinburgh, Serbia and others here in Malta, this is amongst the very best ones out there!”</p><cite>Bojan Brescanski · Google</cite></blockquote>
-      <blockquote><p>“…The first time with a huge pain in my lower back - he fixed it! This time it was a stiff neck emergency - walked in like a robot and came out as if nothing happened!”</p><cite>Mark Sammut · Google</cite></blockquote>
-      <blockquote><p>“…What truly sets them apart is the extra attention and advice they give on stretching and self-massaging after training.”</p><cite>Artur Lengyel · Google</cite></blockquote>
-      <blockquote><p>“Always professional, both Lorant and his wife know what they are doing and are hitting all spots, without even telling them. True masters at their craft.”</p><cite>Kristina Ilievska · Google</cite></blockquote>
+    <span class="lbl">The reviews</span>
+    <h2 style="margin-top:14px">What the 4.9 is made of.</h2>
+    <div class="pcorpo">
+      <div class="placar">
+        <b>4.9</b>
+        <!-- Fora do .estrelas de propósito: lá dentro o `.estrelas svg{width:21px}`
+             venceria o width="0" e abriria um vão vazio antes da primeira estrela. -->
+        <svg aria-hidden="true" width="0" height="0" style="position:absolute"><defs><linearGradient id="est90"><stop offset="90%"/><stop offset="90%"/></linearGradient></defs></svg>
+        <div class="estrelas" role="img" aria-label="Rated 4.9 out of 5 on Google, from 61 reviews">
+          <svg viewBox="0 0 24 24"><path d="M12 1.6l3.1 6.9 7.4.8-5.5 5 1.5 7.3L12 17.9 5.5 21.6 7 14.3l-5.5-5 7.4-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 1.6l3.1 6.9 7.4.8-5.5 5 1.5 7.3L12 17.9 5.5 21.6 7 14.3l-5.5-5 7.4-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 1.6l3.1 6.9 7.4.8-5.5 5 1.5 7.3L12 17.9 5.5 21.6 7 14.3l-5.5-5 7.4-.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 1.6l3.1 6.9 7.4.8-5.5 5 1.5 7.3L12 17.9 5.5 21.6 7 14.3l-5.5-5 7.4-.8z"/></svg>
+          <svg class="parcial" viewBox="0 0 24 24"><path d="M12 1.6l3.1 6.9 7.4.8-5.5 5 1.5 7.3L12 17.9 5.5 21.6 7 14.3l-5.5-5 7.4-.8z"/></svg>
+        </div>
+        <p class="fonte">Google · 61 reviews</p>
+        <div class="barras">
+          <div class="linha"><span>5 ★</span><div class="trilho"><div class="barra" style="width:95.1%"></div></div><span class="qtd">58</span></div>
+          <div class="linha"><span>4 ★</span><div class="trilho"><div class="barra" style="width:1.6%"></div></div><span class="qtd">1</span></div>
+          <div class="linha vazia"><span>3 ★</span><div class="trilho"></div><span class="qtd">0</span></div>
+          <div class="linha vazia"><span>2 ★</span><div class="trilho"></div><span class="qtd">0</span></div>
+          <div class="linha"><span>1 ★</span><div class="trilho"><div class="barra" style="width:3.3%"></div></div><span class="qtd">2</span></div>
+        </div>
+        <div class="segunda">
+          <b>100%</b>
+          <!-- Dois rótulos curtos em vez de um de 34 caracteres: caixa alta
+               come a forma da palavra, então só funciona em pedaço curto.
+               E o "de 30" fica: 100% de 30 quer dizer algo, 100% de 2 não. -->
+          <span>Recommend on Facebook</span>
+          <span>From 30 reviews</span>
+        </div>
+      </div>
+      <div class="citacoes">
+        <blockquote><p>“…The first time with a huge pain in my lower back - he fixed it! This time it was a stiff neck emergency - walked in like a robot and came out as if nothing happened!”</p><cite>Mark Sammut · Google</cite></blockquote>
+        <blockquote><p>“Lorant and his wife Anara are absolutely outstanding at what they do… I have tried massage therapies in Thailand, Edinburgh, Serbia and others here in Malta, this is amongst the very best ones out there!”</p><cite>Bojan Brescanski · Google</cite></blockquote>
+        <blockquote><p>“…What truly sets them apart is the extra attention and advice they give on stretching and self-massaging after training.”</p><cite>Artur Lengyel · Google</cite></blockquote>
+      </div>
     </div>
+    <p class="rodape-honesto">Every quote is copied word for word from Google, punctuation included. The two one-star reviews are counted in the chart above.</p>
   </div>
 </section>
 
