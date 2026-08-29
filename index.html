@@ -37,7 +37,11 @@
   --ivory:#F6F1E8; --ivory-2:#EFE9DE; --hair:#D6CEC1; --hair-2:#C4BAA9;
   --near:#141210; --near-2:#221F1B;
   --ink-2:#6B6259; --ink-3:#6E665C;   /* era #8C8378 = 3,3:1. Agora 5,02:1 */
-  --accent:#944E4D;   /* era #A45D5D = 4,34:1 nos dois usos. Agora 5,40:1 */
+  --accent:#944E4D;
+  /* o capítulo escuro era um segundo tema informal, sem token nenhum */
+  --on-dark:#F4EFE6; --on-dark-2:#D2C9BE; --on-dark-3:#BCB2A6; --dark-rule:#3E382F;
+  /* marcador [PREENCHER] */
+  --fill-bg:#FBF0D8; --fill-border:#C9A227; --fill-text:#6B5310;   /* era #A45D5D = 4,34:1 nos dois usos. Agora 5,40:1 */
 }
 *{box-sizing:border-box}
 
@@ -117,6 +121,9 @@ header.top{
 .hero .lede{color:#D8D0C6; margin-top:18px; max-width:46ch}
 .hero-cta{margin-top:30px; align-self:flex-start; background:var(--ivory); color:var(--near)}
 .hero-cta:hover,.hero-cta:focus-visible{background:var(--accent); color:var(--ivory)}
+/* Medido: o carmim dava 2,69:1 contra a foto escurecida, abaixo dos 3:1.
+   Sobre a foto o anel tem que ser o papel, que dá mais de 15:1. */
+.hero-cta:focus-visible{outline-color:var(--ivory)}
 @media (max-width:640px){
   .hero-scrim{background:linear-gradient(180deg, rgba(20,18,16,.55) 0%, rgba(20,18,16,.86) 55%, rgba(20,18,16,.94) 100%)}
   .hero-copy{padding:120px 24px 56px}
@@ -132,7 +139,7 @@ header.top{
   font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3)}
 /* ---- fotos com legenda ---- */
 figure.foto{margin:26px 0 0}
-figure.foto img{width:100%; height:auto; display:block; border:1px solid var(--hair)}
+figure.foto img{width:100%; height:auto; display:block; outline:1px solid oklch(0 0 0 / .1); outline-offset:-1px}
 figure.dupla{display:grid; gap:12px; grid-template-columns:1fr 1fr; align-items:start}
 @media (max-width:639px){
   figure.dupla{grid-template-columns:1fr; gap:14px}
@@ -143,7 +150,7 @@ figure.dupla figcaption{grid-column:1 / -1}
 figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-serif;
   font-size:14px; letter-spacing:.04em; color:var(--ink-3)}
 .faixa{margin-top:34px; border-top:1px solid var(--hair); padding-top:34px}
-.faixa img{width:100%; height:auto; display:block; border:1px solid var(--hair)}
+.faixa img{width:100%; height:auto; display:block; outline:1px solid oklch(0 0 0 / .1); outline-offset:-1px}
 .faixa figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-serif;
   font-size:14px; letter-spacing:.04em; color:var(--ink-3)}
 
@@ -163,12 +170,12 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
   }
   [role="tab"]{
     flex:0 0 auto; white-space:nowrap; scroll-snap-align:start;
-    border-bottom:0; border-right:1px solid var(--hair);
+    border-bottom:0; border-inline-end:1px solid var(--hair);
   }
   [role="tab"]:last-child{border-right:0}
   [role="tab"][aria-selected="true"]{box-shadow:inset 0 -3px 0 var(--accent)}
 }
-@media (min-width:860px){ [role="tablist"]{border-bottom:0; border-right:1px solid var(--hair)} }
+@media (min-width:860px){ [role="tablist"]{border-bottom:0; border-inline-end:1px solid var(--hair)} }
 [role="tab"]{
   appearance:none; background:transparent; border:0; border-bottom:1px solid var(--hair);
   text-align:left; padding:16px 20px; min-height:52px; cursor:pointer;
@@ -186,6 +193,7 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
 [role="tabpanel"] p{color:var(--ink-2); max-width:52ch}
 .tp-meta{display:flex; gap:26px; flex-wrap:wrap; margin-top:24px; padding-top:18px; border-top:1px solid var(--hair)}
 .tp-meta div{display:grid; gap:3px}
+.tp-meta .tp-area{flex-basis:100%}
 .tp-meta .lbl{font-size:11.5px}
 .tp-meta .val{font-family:"Barlow Condensed",sans-serif; font-size:18px; font-weight:500; letter-spacing:.04em; font-variant-numeric:tabular-nums}
 .tp-cta{
@@ -198,7 +206,7 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
 .tp-cta:hover,.tp-cta:focus-visible{background:var(--accent)}
 
 /* ---- citação do próprio dono ---- */
-.own{margin:22px 0 0; padding-left:20px; border-left:2px solid var(--accent); max-width:60ch}
+.own{margin:22px 0 0; padding-inline-start:20px; border-inline-start:2px solid var(--accent); max-width:60ch}
 .own p{font-family:Prata,serif; font-size:clamp(18px,2.1vw,22px); line-height:1.45; color:var(--near)}
 .own cite{display:block; margin-top:13px; font-family:"Barlow Condensed",sans-serif; font-style:normal;
   font-size:12.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-3)}
@@ -210,7 +218,7 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   background:var(--ivory);
 }
-@media (min-width:1040px){ .mapa-col{border-top:0; border-left:1px solid var(--hair)} }
+@media (min-width:1040px){ .mapa-col{border-top:0; border-inline-start:1px solid var(--hair)} }
 .mapa-tit{
   margin:0 0 14px; font-family:"Barlow Condensed",sans-serif; font-weight:600;
   font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3);
@@ -229,16 +237,16 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
 
 /* ---- capítulo escuro ---- */
 .dark{background:var(--near); color:var(--ivory)}
-.dark .lbl{color:#BCB2A6}
-.dark .lede{color:#D2C9BE}
+.dark .lbl{color:var(--on-dark-3)}
+.dark .lede{color:var(--on-dark-2)}
 .dark h2{font-size:clamp(26px,3.8vw,42px); line-height:1.2}
-.dark blockquote{margin:0; padding-top:22px; border-top:1px solid #3E382F}
+.dark blockquote{margin:0; padding-top:22px; border-top:1px solid var(--dark-rule)}
 /* Barlow, não Prata: serifada de traço fino sobre fundo escuro some.
    Corpo maior e entrelinha mais folgada, que é o que as referências fazem. */
 .dark blockquote p{font-family:Barlow,system-ui,sans-serif; font-weight:400;
-  font-size:19.5px; line-height:1.68; color:#F4EFE6; letter-spacing:.004em;
+  font-size:19.5px; line-height:1.68; color:var(--on-dark); letter-spacing:.004em;
   max-width:68ch}
-.dark blockquote cite{display:block; margin-top:15px; font-style:normal; font-family:"Barlow Condensed",sans-serif; font-size:13.5px; letter-spacing:.16em; text-transform:uppercase; color:#BCB2A6}
+.dark blockquote cite{display:block; margin-top:15px; font-style:normal; font-family:"Barlow Condensed",sans-serif; font-size:13.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--on-dark-3)}
 .qgrid{display:grid; gap:30px; margin-top:38px}
 @media (min-width:800px){ .qgrid{grid-template-columns:repeat(2,1fr)} }
 
@@ -247,13 +255,13 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
 @media (min-width:800px){ .loc{grid-template-columns:1fr 1fr} }
 .loc > div{padding:30px 28px}
 .loc > div + div{border-top:1px solid var(--hair)}
-@media (min-width:800px){ .loc > div + div{border-top:0; border-left:1px solid var(--hair)} }
+@media (min-width:800px){ .loc > div + div{border-top:0; border-inline-start:1px solid var(--hair)} }
 .loc h3{font-size:24px; margin-bottom:14px}
 .loc dl{margin:0; display:grid; gap:12px}
 .loc dt{font-family:"Barlow Condensed",sans-serif; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3)}
 .loc dd{margin:2px 0 0; font-size:16.5px}
 
-.fill{display:inline-block; background:#FBF0D8; border:1px dashed #C9A227; color:#6B5310; padding:1px 8px; font-size:14.5px; font-weight:500}
+.fill{display:inline-block; background:var(--fill-bg); border:1px dashed var(--fill-border); color:var(--fill-text); padding:1px 8px; font-size:14.5px; font-weight:500}
 
 .final{text-align:center; border-top:1px solid var(--hair)}
 .final h2{font-size:clamp(30px,5vw,52px); line-height:1.12; max-width:16ch; margin:0 auto}
@@ -271,7 +279,9 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
   </div>
 </header>
 
-<header class="hero">
+<main>
+
+<section class="hero">
   <img class="hero-bg" src="img/hero-sessao.jpg" width="1600" height="1066" alt="Lorant working on a client's back in the Qawra clinic" fetchpriority="high" decoding="async">
   <div class="hero-scrim"></div>
   <div class="wrap hero-copy">
@@ -279,7 +289,7 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
     <p class="lede">Deep tissue, sports massage and spinal work. Lorant works out what is causing the pain before he touches anything.</p>
     <a class="top-cta hero-cta" data-wa="hero" href="#">Message on WhatsApp</a>
   </div>
-</header>
+</section>
 
 <div class="numeros">
   <div class="wrap numeros-grade">
@@ -306,7 +316,7 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
       <h2>A therapist. Not a chiropractor, not a doctor.</h2>
       <p class="lede">Those are his own words, posted on his page in September 2024:</p>
       <blockquote class="own">
-        <p>"Please note that I am a therapist, not a chiropractor, and I am not a doctor. I have developed my own unique massage therapy approach, which combines all the techniques I’ve learned over the years to address your specific issues. This is not just a simple massage or a quick bone adjustment—it’s a comprehensive, personalized treatment."</p>
+        <p>“Please note that I am a therapist, not a chiropractor, and I am not a doctor. I have developed my own unique massage therapy approach, which combines all the techniques I’ve learned over the years to address your specific issues. This is not just a simple massage or a quick bone adjustment—it’s a comprehensive, personalized treatment.”</p>
         <cite>Lorant · Facebook</cite>
       </blockquote>
       <p class="lede" style="margin-top:20px">So this page does not diagnose anything and does not promise what one session will do. If something needs a doctor, it needs a doctor.</p>
@@ -341,8 +351,9 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
           <div><span class="lbl">Length</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
           <div><span class="lbl">Price</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
           <div><span class="lbl">With</span><span class="val">Lorant</span></div>
+          <div class="tp-area"><span class="lbl">Works on</span><span class="val">Shoulders · Upper back · Lower back</span></div>
         </div>
-        <a class="tp-cta" data-wa="t1" href="#">Ask about this</a>
+        <a class="tp-cta" data-wa="t1" href="#">Ask about deep tissue</a>
       </div>
 
       <div role="tabpanel" id="p-2" aria-labelledby="t-2" hidden>
@@ -352,8 +363,9 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
           <div><span class="lbl">Length</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
           <div><span class="lbl">Price</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
           <div><span class="lbl">With</span><span class="val">Lorant</span></div>
+          <div class="tp-area"><span class="lbl">Works on</span><span class="val">Shoulders · Thighs · Calves</span></div>
         </div>
-        <a class="tp-cta" data-wa="t2" href="#">Ask about this</a>
+        <a class="tp-cta" data-wa="t2" href="#">Ask about sports massage</a>
       </div>
 
       <div role="tabpanel" id="p-3" aria-labelledby="t-3" hidden>
@@ -363,8 +375,9 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
           <div><span class="lbl">Length</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
           <div><span class="lbl">Price</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
           <div><span class="lbl">With</span><span class="val">Lorant</span></div>
+          <div class="tp-area"><span class="lbl">Works on</span><span class="val">Neck · Shoulders · Upper back</span></div>
         </div>
-        <a class="tp-cta" data-wa="t3" href="#">Ask about this</a>
+        <a class="tp-cta" data-wa="t3" href="#">Ask about trigger point</a>
       </div>
 
       <div role="tabpanel" id="p-4" aria-labelledby="t-4" hidden>
@@ -374,8 +387,9 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
           <div><span class="lbl">Length</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
           <div><span class="lbl">Price</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
           <div><span class="lbl">With</span><span class="val">Lorant</span></div>
+          <div class="tp-area"><span class="lbl">Works on</span><span class="val">Neck · Upper back · Lower back</span></div>
         </div>
-        <a class="tp-cta" data-wa="t4" href="#">Ask about this</a>
+        <a class="tp-cta" data-wa="t4" href="#">Ask about an adjustment</a>
       </div>
 
       <div role="tabpanel" id="p-5" aria-labelledby="t-5" hidden>
@@ -385,8 +399,9 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
           <div><span class="lbl">Length</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
           <div><span class="lbl">Price</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
           <div><span class="lbl">With</span><span class="val">Lorant</span></div>
+          <div class="tp-area"><span class="lbl">Works on</span><span class="val">Upper back · Lower back · Neck</span></div>
         </div>
-        <a class="tp-cta" data-wa="t5" href="#">Ask about this</a>
+        <a class="tp-cta" data-wa="t5" href="#">Ask about cupping</a>
       </div>
 
       <div role="tabpanel" id="p-6" aria-labelledby="t-6" hidden>
@@ -396,13 +411,14 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
           <div><span class="lbl">Length</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
           <div><span class="lbl">Price</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
           <div><span class="lbl">With</span><span class="val">Anara</span></div>
+          <div class="tp-area"><span class="lbl">Works on</span><span class="val">Arms · Thighs · Calves</span></div>
         </div>
-        <a class="tp-cta" data-wa="t6" href="#">Ask about this</a>
+        <a class="tp-cta" data-wa="t6" href="#">Ask about lymphatic drainage</a>
       </div>
 
       <div class="mapa-col">
         <p class="mapa-tit">Where it works</p>
-        <svg class="mapa" viewBox="0 0 200 480" role="img" aria-label="Diagram of the body, seen from behind, with the areas each treatment works on">
+        <svg class="mapa" viewBox="0 0 200 480" aria-hidden="true" focusable="false">
           <g class="silhueta">
             <ellipse cx="100" cy="34" rx="20" ry="29"/>
             <path d="M88 62 C88 70 86 74 82 77 C66 81 55 90 51 103
@@ -464,10 +480,10 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
     <h2>Sixty one reviews. Fifty eight of them five stars.</h2>
     <p class="lede" style="margin-top:14px">Copied word for word from Google. Two of the sixty one are one star, and this page is not pretending otherwise.</p>
     <div class="qgrid">
-      <blockquote><p>"Lorant and his wife Anara are absolutely outstanding at what they do… I have tried massage therapies in Thailand, Edinburgh, Serbia and others here in Malta, this is amongst the very best ones out there!"</p><cite>Bojan Brescanski · Google</cite></blockquote>
-      <blockquote><p>"…The first time with a huge pain in my lower back - he fixed it! This time it was a stiff neck emergency - walked in like a robot and came out as if nothing happened!"</p><cite>Mark Sammut · Google</cite></blockquote>
-      <blockquote><p>"…What truly sets them apart is the extra attention and advice they give on stretching and self-massaging after training."</p><cite>Artur Lengyel · Google</cite></blockquote>
-      <blockquote><p>"Always professional, both Lorant and his wife know what they are doing and are hitting all spots, without even telling them. True masters at their craft."</p><cite>Kristina Ilievska · Google</cite></blockquote>
+      <blockquote><p>“Lorant and his wife Anara are absolutely outstanding at what they do… I have tried massage therapies in Thailand, Edinburgh, Serbia and others here in Malta, this is amongst the very best ones out there!”</p><cite>Bojan Brescanski · Google</cite></blockquote>
+      <blockquote><p>“…The first time with a huge pain in my lower back - he fixed it! This time it was a stiff neck emergency - walked in like a robot and came out as if nothing happened!”</p><cite>Mark Sammut · Google</cite></blockquote>
+      <blockquote><p>“…What truly sets them apart is the extra attention and advice they give on stretching and self-massaging after training.”</p><cite>Artur Lengyel · Google</cite></blockquote>
+      <blockquote><p>“Always professional, both Lorant and his wife know what they are doing and are hitting all spots, without even telling them. True masters at their craft.”</p><cite>Kristina Ilievska · Google</cite></blockquote>
     </div>
   </div>
 </section>
@@ -505,6 +521,8 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
     <a class="top-cta" data-wa="final" href="#" style="margin-top:28px">Message +356 9926 0483</a>
   </div>
 </section>
+
+</main>
 
 <footer>
   <div class="wrap">
