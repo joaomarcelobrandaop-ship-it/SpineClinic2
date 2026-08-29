@@ -332,6 +332,46 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
 
 .fill{display:inline-block; background:var(--fill-bg); border:1px dashed var(--fill-border); color:var(--fill-text); padding:1px 8px; font-size:14.5px; font-weight:500}
 
+/* ---- mapa da localização ----
+   `.mapa` já é o corpo humano do seletor de tratamento, por isso `-loc`. */
+.mapa-loc{margin:0 0 26px; border:1px solid var(--hair); background:var(--ivory-2);
+  aspect-ratio:1200/540}
+.mapa-loc iframe{width:100%; height:100%; border:0; display:block}
+@media (max-width:639px){ .mapa-loc{aspect-ratio:4/3} }
+
+/* ---- portão de consentimento + política ----
+   SÓ aparecem se INTEGRACOES.consentimento.enabled virar true. Hoje este
+   CSS não pinta nada: fica aqui pronto pro dia que ligar. Regra 8. */
+.consent{position:fixed; inset:auto 0 0 0; z-index:50; background:var(--near);
+  color:var(--on-dark); border-top:1px solid var(--dark-rule)}
+.consent-in{max-width:1160px; margin:0 auto; padding:20px 24px; display:grid; gap:16px}
+@media (min-width:860px){ .consent-in{grid-template-columns:1fr auto; align-items:center} }
+.consent p{font-size:15.5px; line-height:1.6; color:var(--on-dark-2); max-width:70ch}
+.consent p b{color:var(--on-dark); font-weight:500}
+.consent-bts{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+/* Aceitar e Recusar têm que ser IGUALMENTE fáceis: mesmo tamanho, mesma área
+   de toque, mesmo peso. Botão de recusa menor ou escondido é exatamente o
+   que a UE proibiu. */
+.consent-bt{font-family:"Barlow Condensed",sans-serif; font-weight:600; font-size:14px;
+  letter-spacing:.14em; text-transform:uppercase; padding:12px 22px; min-height:46px;
+  border-radius:1px; cursor:pointer; border:1px solid var(--on-dark);
+  background:var(--on-dark); color:var(--near);
+  transition:background 150ms ease, transform 140ms var(--ease-out)}
+.consent-bt.recusar{background:transparent; color:var(--on-dark)}
+.consent-bt:active{transform:scale(.96)}
+.consent a{color:var(--on-dark-2)}
+@media (prefers-reduced-motion:reduce){ .consent-bt:active{transform:none} }
+
+.mapa-portao{display:grid; place-content:center; text-align:center; gap:12px;
+  padding:24px; height:100%}
+.mapa-portao p{color:var(--ink-2); max-width:46ch; font-size:15.5px}
+.mapa-portao .consent-bt{justify-self:center; background:var(--near);
+  color:var(--ivory); border-color:var(--near)}
+
+.privacidade{border-top:1px solid var(--hair); padding:76px 0}
+.privacidade h3{font-size:19px; margin:26px 0 8px}
+.privacidade p{max-width:68ch; margin-bottom:10px; color:var(--ink-2)}
+
 .final{text-align:center; border-top:1px solid var(--hair)}
 .final h2{font-size:clamp(30px,5vw,52px); line-height:1.12; max-width:16ch; margin:0 auto}
 footer{border-top:1px solid var(--hair); padding:30px 0 56px; font-size:14.5px; color:var(--ink-3); line-height:1.9}
@@ -588,6 +628,7 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
 <section>
   <div class="wrap">
     <h2 style="font-size:clamp(26px,3.6vw,38px); margin:0 0 26px">Qawra, on Triq It-Trill</h2>
+    <div class="mapa-loc" id="mapa-loc"></div>
     <div class="loc">
       <div>
         <h3>Where</h3>
@@ -629,6 +670,66 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
   </div>
 </footer>
 
+<!-- ============================================================
+     MAPA, PORTÃO DE CONSENTIMENTO E POLÍTICA DE PRIVACIDADE
+
+     Conteúdo de <template> não renderiza e não pede nada à rede. Então
+     o banner e a política aqui embaixo custam ZERO enquanto
+     INTEGRACOES.consentimento.enabled for false — nem um byte a mais.
+
+     HOJE (ciclo A): só o mapa é montado, e direto.
+     LIGAR no ciclo B: `consentimento: { enabled:true }`. Aí o mapa vira
+     portão, o banner aparece, a política entra antes do rodapé e o rodapé
+     ganha o link "Cookies" pra retirar o consentimento. Regra 8.
+     ============================================================ -->
+<template id="tpl-mapa">
+  <iframe title="Google map showing 11 Triq it-Trill, Qawra, Malta"
+          src="https://www.google.com/maps?q=11+Triq+it-Trill,+San+Pawl+il-Bahar,+Malta&amp;output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</template>
+
+<template id="tpl-consent">
+  <div class="consent" role="region" aria-label="Cookies">
+    <div class="consent-in">
+      <p><b>The map on this page comes from Google.</b> Loading it lets Google set cookies on your device and receive your IP address. Nothing else on this site collects anything about you.</p>
+      <div class="consent-bts">
+        <button class="consent-bt" type="button" data-consent="sim">Accept</button>
+        <button class="consent-bt recusar" type="button" data-consent="nao">Refuse</button>
+        <a href="#privacy">Privacy policy</a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="tpl-privacidade">
+  <section class="privacidade" id="privacy">
+    <div class="wrap">
+      <h2>Privacy policy</h2>
+
+      <h3>Who is responsible</h3>
+      <p>Mobile Spine Clinic, 11 Triq it-Trill, San Pawl il-Baħar (Qawra), Malta. Phone and WhatsApp: +356 9926 0483. Registration or VAT number: <span class="fill">[PREENCHER: nº de registo / IVA]</span></p>
+      <p>The clinic decides what happens with your data. The site is built and maintained by João Marcelo Brandão (Sites JM), who acts only on the clinic's instructions.</p>
+
+      <h3>What this site collects</h3>
+      <p>On its own, nothing. There is no contact form, no newsletter, no analytics and no advertising pixel. Booking happens on WhatsApp, which is outside this site.</p>
+
+      <h3>The one exception: the map</h3>
+      <p>The map is embedded from Google Maps. If you accept it, Google receives your IP address and may set cookies on your device. Google decides on its own what it does with that. The map loads only after you accept, and refusing changes nothing else here: the address and the directions link work either way.</p>
+
+      <h3>Changing your mind</h3>
+      <p>Use the "Cookies" link in the footer at any time. Refusing is as easy as accepting and costs you nothing.</p>
+
+      <h3>Your rights</h3>
+      <p>Under the GDPR you can ask for access to your data, correction, erasure, restriction and portability, and you can object to processing. Write to +356 9926 0483 or <span class="fill">[PREENCHER: e-mail]</span></p>
+
+      <h3>Complaints</h3>
+      <p>If you think your data has been mishandled, you can complain to the Information and Data Protection Commissioner (IDPC) in Malta, at idpc.org.mt</p>
+
+      <p>Last updated: <span class="fill">[PREENCHER: data]</span></p>
+    </div>
+  </section>
+</template>
+
 <script>
 /* ============================================================
    CONFIG
@@ -665,7 +766,15 @@ const INTEGRACOES = {
   metaPixel:       { enabled:false, id:"" },
   formspree:       { enabled:false, endpoint:"" },
   planilha:        { enabled:false, endpoint:"" },
-  agendaOnline:    { enabled:false, url:"" }
+  agendaOnline:    { enabled:false, url:"" },
+  /* Portão de consentimento + política de privacidade: ESCRITOS e DESLIGADOS.
+     Hoje o mapa do Google carrega direto — decisão do João em 29/08/2026, num
+     MVP `noindex` que na prática só o dono vai abrir, então não há público
+     e não há exposição.
+     LIGAR (true) no ciclo B, quando o site for pro domínio dele e receber
+     gente de verdade: aí o mapa vira rastreador com público e a UE exige
+     aceite antes. Regra 8 + checklist-clientes-europa.md. */
+  consentimento:   { enabled:false }
 };
 
 document.querySelectorAll("[data-wa]").forEach(function(el){
@@ -674,6 +783,77 @@ document.querySelectorAll("[data-wa]").forEach(function(el){
   el.href = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg);
   el.rel = "noopener"; el.target = "_blank";
 });
+
+/* ---- mapa da localização e portão de consentimento ----
+   DESLIGADO (hoje): monta o mapa direto.
+   LIGADO: sem aceite o lugar do mapa vira um portão, e o banner pergunta. */
+(function(){
+  var caixa   = document.getElementById("mapa-loc");
+  var tplMapa = document.getElementById("tpl-mapa");
+  if(!caixa || !tplMapa) return;
+
+  function montarMapa(){
+    caixa.textContent = "";
+    caixa.appendChild(tplMapa.content.cloneNode(true));
+  }
+
+  if(!INTEGRACOES.consentimento.enabled){ montarMapa(); return; }
+
+  /* ===== daqui pra baixo só roda com o consentimento LIGADO ===== */
+  var CHAVE = "msc-consentimento";
+  function lido(){ try { return localStorage.getItem(CHAVE); } catch(e){ return null; } }
+  function grava(v){ try { localStorage.setItem(CHAVE, v); } catch(e){} }
+
+  function portao(){
+    caixa.textContent = "";
+    var d = document.createElement("div");
+    d.className = "mapa-portao";
+    d.innerHTML = '<p>The map is loaded from Google, which sets cookies on your ' +
+                  'device and receives your IP address.</p>' +
+                  '<button class="consent-bt" type="button">Load the map</button>';
+    d.querySelector("button").addEventListener("click", function(){
+      grava("sim"); montarMapa();
+    });
+    caixa.appendChild(d);
+  }
+
+  function fechar(){
+    var b = document.querySelector(".consent");
+    if(b) b.parentNode.removeChild(b);
+  }
+
+  function perguntar(){
+    if(document.querySelector(".consent")) return;
+    var t = document.getElementById("tpl-consent");
+    if(!t) return;
+    document.body.appendChild(t.content.cloneNode(true));
+    document.querySelector('[data-consent="sim"]').addEventListener("click", function(){
+      grava("sim"); montarMapa(); fechar();
+    });
+    document.querySelector('[data-consent="nao"]').addEventListener("click", function(){
+      grava("nao"); portao(); fechar();
+    });
+  }
+
+  /* a política entra antes do rodapé, e o rodapé ganha o link de retirada.
+     Retirar tem que ser tão fácil quanto dar — exigência da UE, não enfeite. */
+  var tplPol = document.getElementById("tpl-privacidade");
+  var rodape = document.querySelector("footer");
+  if(tplPol && rodape && !document.getElementById("privacy")){
+    rodape.parentNode.insertBefore(tplPol.content.cloneNode(true), rodape);
+    var wrap = rodape.querySelector(".wrap");
+    var link = document.createElement("a");
+    link.href = "#privacy"; link.textContent = "Cookies";
+    link.addEventListener("click", function(){ grava(""); portao(); perguntar(); });
+    wrap.appendChild(document.createTextNode(" · "));
+    wrap.appendChild(link);
+  }
+
+  var escolha = lido();
+  if(escolha === "sim"){ montarMapa(); }
+  else if(escolha === "nao"){ portao(); }
+  else { portao(); perguntar(); }
+})();
 
 /* ---- seletor de tratamento: tablist acessível ----
    Setas movem, Home/End vão pras pontas, Enter e Espaço já funcionam
