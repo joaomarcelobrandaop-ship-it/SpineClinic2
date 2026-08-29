@@ -116,7 +116,8 @@ header.top{
 /* ---- fotos com legenda ---- */
 figure.foto{margin:26px 0 0}
 figure.foto img{width:100%; height:auto; display:block; border:1px solid var(--hair)}
-figure.dupla{display:grid; gap:10px; grid-template-columns:1fr 1fr}
+figure.dupla{display:grid; gap:12px; grid-template-columns:1fr 1fr; align-items:start}
+figure.dupla img{aspect-ratio:3 / 4; object-fit:cover; object-position:50% 30%}
 figure.dupla figcaption{grid-column:1 / -1}
 figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-serif;
   font-size:14px; letter-spacing:.04em; color:var(--ink-3)}
@@ -186,12 +187,12 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
   margin:0 0 16px; font-family:"Barlow Condensed",sans-serif; font-weight:600;
   font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3);
 }
-.mapa{width:100%; max-width:196px; height:auto; display:block}
-.silhueta{fill:none; stroke:var(--hair-2); stroke-width:1.6; stroke-linejoin:round}
+.mapa{width:100%; max-width:186px; height:auto; display:block}
+.silhueta{fill:none; stroke:var(--hair-2); stroke-width:1.5; stroke-linejoin:round; stroke-linecap:round}
 .coluna line{stroke:var(--ink-3); stroke-width:1.4; stroke-linecap:round}
 .coluna .vert line{stroke-width:2.2; opacity:.55}
 .z{fill:var(--accent); opacity:0; transition:opacity 220ms ease}
-.z.on{opacity:.78}
+.z.on{opacity:.72}
 @media (prefers-reduced-motion:reduce){ .z{transition:none} }
 .mapa-nota{
   margin:16px 0 0; font-family:"Barlow Condensed",sans-serif; font-size:12.5px;
@@ -376,42 +377,55 @@ footer a{color:var(--accent)}
 
       <div class="mapa-col">
         <p class="mapa-tit">Where it works</p>
-        <svg class="mapa" viewBox="0 0 200 430" role="img" aria-label="Diagram of the body, seen from behind, with the areas each treatment works on">
+        <svg class="mapa" viewBox="0 0 200 480" role="img" aria-label="Diagram of the body, seen from behind, with the areas each treatment works on">
           <g class="silhueta">
-            <circle cx="100" cy="32" r="20"/>
-            <path d="M88 50 L88 61 C70 65 58 77 55 93 L47 135 C45 145 54 148 57 138
-                     L66 105 L70 177 C71 195 73 207 75 221 L80 301
-                     C81 317 83 339 85 357 L88 401 C89 410 99 410 99 401
-                     L100 302 L101 401 C101 410 111 410 112 401
-                     L115 357 C117 339 119 317 120 301 L125 221
-                     C127 207 129 195 130 177 L134 105 L143 138
-                     C146 148 155 145 153 135 L145 93 C142 77 130 65 112 61 L112 50 Z"/>
+            <ellipse cx="100" cy="34" rx="20" ry="29"/>
+            <path d="M88 62 C88 70 86 74 82 77 C66 81 55 90 51 103
+                     L60 116 C61 132 62 146 63 158 L61 186
+                     C61 206 65 226 70 244 L100 258 L130 244
+                     C135 226 139 206 139 186 L137 158
+                     C138 146 139 132 140 116 L149 103
+                     C145 90 134 81 118 77 C114 74 112 70 112 62"/>
+            <path d="M51 103 L45 134 C43 148 46 164 48 178 L51 214
+                     C52 226 50 234 47 242 C44 251 54 253 57 243
+                     L62 210 L64 172 C65 154 62 132 60 116 Z"/>
+            <path d="M149 103 L155 134 C157 148 154 164 152 178 L149 214
+                     C148 226 150 234 153 242 C156 251 146 253 143 243
+                     L138 210 L136 172 C135 154 138 132 140 116 Z"/>
+            <path d="M70 246 C68 282 68 320 70 348 L74 402
+                     C75 426 77 440 78 450 C79 460 89 460 90 450
+                     L93 402 L98 342 C99 312 100 282 100 260"/>
+            <path d="M130 246 C132 282 132 320 130 348 L126 402
+                     C125 426 123 440 122 450 C121 460 111 460 110 450
+                     L107 402 L102 342 C101 312 100 282 100 260"/>
+            <path d="M78 452 C76 460 78 466 86 466 L92 466 C96 466 96 458 94 452"/>
+            <path d="M122 452 C124 460 122 466 114 466 L108 466 C104 466 104 458 106 452"/>
           </g>
           <g class="coluna">
-            <line x1="100" y1="70" x2="100" y2="196"/>
+            <line x1="100" y1="78" x2="100" y2="236"/>
             <g class="vert">
-              <line x1="93" y1="80"  x2="107" y2="80"/>
-              <line x1="93" y1="94"  x2="107" y2="94"/>
-              <line x1="92" y1="108" x2="108" y2="108"/>
-              <line x1="92" y1="122" x2="108" y2="122"/>
-              <line x1="91" y1="138" x2="109" y2="138"/>
+              <line x1="94" y1="88"  x2="106" y2="88"/>
+              <line x1="93" y1="104" x2="107" y2="104"/>
+              <line x1="92" y1="120" x2="108" y2="120"/>
+              <line x1="92" y1="136" x2="108" y2="136"/>
               <line x1="91" y1="154" x2="109" y2="154"/>
-              <line x1="90" y1="171" x2="110" y2="171"/>
-              <line x1="90" y1="188" x2="110" y2="188"/>
+              <line x1="91" y1="172" x2="109" y2="172"/>
+              <line x1="90" y1="192" x2="110" y2="192"/>
+              <line x1="90" y1="212" x2="110" y2="212"/>
             </g>
           </g>
           <g class="zonas">
-            <ellipse class="z" data-z="pescoco"      cx="100" cy="76"  rx="16" ry="11"/>
-            <ellipse class="z" data-z="ombros"       cx="76"  cy="94"  rx="17" ry="13"/>
-            <ellipse class="z" data-z="ombros"       cx="124" cy="94"  rx="17" ry="13"/>
-            <ellipse class="z" data-z="dorsal"       cx="100" cy="126" rx="31" ry="25"/>
-            <ellipse class="z" data-z="lombar"       cx="100" cy="180" rx="27" ry="21"/>
-            <ellipse class="z" data-z="bracos"       cx="57"  cy="120" rx="9"  ry="26"/>
-            <ellipse class="z" data-z="bracos"       cx="143" cy="120" rx="9"  ry="26"/>
-            <ellipse class="z" data-z="coxas"        cx="88"  cy="256" rx="11" ry="32"/>
-            <ellipse class="z" data-z="coxas"        cx="112" cy="256" rx="11" ry="32"/>
-            <ellipse class="z" data-z="panturrilhas" cx="90"  cy="344" rx="9"  ry="26"/>
-            <ellipse class="z" data-z="panturrilhas" cx="110" cy="344" rx="9"  ry="26"/>
+            <circle class="z" data-z="pescoco"      cx="100" cy="74"  r="9"/>
+            <circle class="z" data-z="ombros"       cx="74"  cy="98"  r="11"/>
+            <circle class="z" data-z="ombros"       cx="126" cy="98"  r="11"/>
+            <circle class="z" data-z="dorsal"       cx="100" cy="130" r="15"/>
+            <circle class="z" data-z="lombar"       cx="100" cy="192" r="13"/>
+            <circle class="z" data-z="bracos"       cx="52"  cy="178" r="9"/>
+            <circle class="z" data-z="bracos"       cx="148" cy="178" r="9"/>
+            <circle class="z" data-z="coxas"        cx="82"  cy="300" r="12"/>
+            <circle class="z" data-z="coxas"        cx="118" cy="300" r="12"/>
+            <circle class="z" data-z="panturrilhas" cx="79"  cy="396" r="10"/>
+            <circle class="z" data-z="panturrilhas" cx="121" cy="396" r="10"/>
           </g>
         </svg>
         <p class="mapa-nota">Seen from behind. Highlighted for the treatment selected on the left.</p>
