@@ -76,18 +76,37 @@ header.top{
 }
 .top-cta:hover,.top-cta:focus-visible{background:var(--accent)}
 
-/* ---- hero: retrato documental cortado + frase grande ---- */
-.hero{display:grid; gap:0; border-bottom:1px solid var(--hair)}
-@media (min-width:900px){ .hero{grid-template-columns:1fr 1fr; align-items:stretch} }
-.hero-copy{padding:76px 24px 76px; display:flex; flex-direction:column; justify-content:center}
-@media (min-width:900px){ .hero-copy{padding-left:max(24px, calc((100vw - 1160px)/2 + 24px))} }
-.hero h1{font-size:clamp(34px,5.4vw,58px); line-height:1.14; max-width:14ch}
-.hero .lede{margin-top:20px}
-.hero-portrait{
-  background:var(--ivory-2); border-left:1px solid var(--hair);
-  min-height:340px; position:relative; overflow:hidden;
+/* ---- hero: foto larga da sessão com o texto por cima ----
+   É o que as cinco referências fazem. Retrato de rosto em meia tela
+   vira um close enorme e não conta o que o negócio faz. */
+.hero{position:relative; isolation:isolate; overflow:hidden; border-bottom:1px solid var(--hair)}
+.hero-bg{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; object-position:58% 42%; z-index:-2; display:block;
 }
-.hero-portrait img{width:100%; height:100%; object-fit:cover; display:block}
+.hero-scrim{
+  position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(100deg, rgba(20,18,16,.90) 0%, rgba(20,18,16,.74) 42%, rgba(20,18,16,.20) 78%, rgba(20,18,16,.08) 100%);
+}
+.hero-copy{padding:96px 24px 92px; min-height:min(78vh,620px); display:flex; flex-direction:column; justify-content:flex-end}
+.hero .lbl{color:#C9BFB2}
+.hero h1{color:var(--ivory); font-size:clamp(34px,5.6vw,62px); line-height:1.1; max-width:15ch}
+.hero .lede{color:#D8D0C6; margin-top:18px; max-width:46ch}
+.hero-cta{margin-top:30px; align-self:flex-start; background:var(--ivory); color:var(--near)}
+.hero-cta:hover,.hero-cta:focus-visible{background:var(--accent); color:var(--ivory)}
+@media (max-width:640px){
+  .hero-scrim{background:linear-gradient(180deg, rgba(20,18,16,.55) 0%, rgba(20,18,16,.86) 55%, rgba(20,18,16,.94) 100%)}
+  .hero-copy{padding:120px 24px 56px}
+}
+
+/* ---- faixa de números (padrão visto na Malta-Ballston) ---- */
+.numeros{border-bottom:1px solid var(--hair); background:var(--ivory-2)}
+.numeros-grade{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--hair)}
+@media (min-width:760px){ .numeros-grade{grid-template-columns:repeat(4,1fr)} }
+.numeros-grade > div{background:var(--ivory-2); padding:26px 20px; text-align:center}
+.numeros-grade b{display:block; font-family:Prata,serif; font-weight:400; font-size:34px; line-height:1; color:var(--near)}
+.numeros-grade span{display:block; margin-top:9px; font-family:"Barlow Condensed",sans-serif;
+  font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3)}
 .portrait-note{
   border:1px dashed #C9A227; background:#FBF0D8; color:#6B5310;
   padding:14px 16px; font-size:14px; line-height:1.55; max-width:44ch;
@@ -97,6 +116,8 @@ header.top{
 /* ---- fotos com legenda ---- */
 figure.foto{margin:26px 0 0}
 figure.foto img{width:100%; height:auto; display:block; border:1px solid var(--hair)}
+figure.dupla{display:grid; gap:10px; grid-template-columns:1fr 1fr}
+figure.dupla figcaption{grid-column:1 / -1}
 figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-serif;
   font-size:14px; letter-spacing:.04em; color:var(--ink-3)}
 .faixa{margin-top:34px; border-top:1px solid var(--hair); padding-top:34px}
@@ -154,14 +175,40 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
 .own cite{display:block; margin-top:13px; font-family:"Barlow Condensed",sans-serif; font-style:normal;
   font-size:12.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-3)}
 
+/* ---- mapa do corpo ---- */
+@media (min-width:1040px){ .treat{grid-template-columns:250px minmax(0,1fr) 224px} }
+.mapa-col{
+  border-top:1px solid var(--hair); padding:26px 22px 24px;
+  display:flex; flex-direction:column; align-items:center; background:var(--ivory);
+}
+@media (min-width:1040px){ .mapa-col{border-top:0; border-left:1px solid var(--hair)} }
+.mapa-tit{
+  margin:0 0 16px; font-family:"Barlow Condensed",sans-serif; font-weight:600;
+  font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3);
+}
+.mapa{width:100%; max-width:196px; height:auto; display:block}
+.silhueta{fill:none; stroke:var(--hair-2); stroke-width:1.6; stroke-linejoin:round}
+.coluna line{stroke:var(--ink-3); stroke-width:1.4; stroke-linecap:round}
+.coluna .vert line{stroke-width:2.2; opacity:.55}
+.z{fill:var(--accent); opacity:0; transition:opacity 220ms ease}
+.z.on{opacity:.78}
+@media (prefers-reduced-motion:reduce){ .z{transition:none} }
+.mapa-nota{
+  margin:16px 0 0; font-family:"Barlow Condensed",sans-serif; font-size:12.5px;
+  line-height:1.5; letter-spacing:.03em; color:var(--ink-3); text-align:center; max-width:22ch;
+}
+
 /* ---- capítulo escuro ---- */
 .dark{background:var(--near); color:var(--ivory)}
-.dark .lbl{color:#9A9088}
-.dark .lede{color:#C3BAB0}
+.dark .lbl{color:#BCB2A6}
+.dark .lede{color:#D2C9BE}
 .dark h2{font-size:clamp(26px,3.8vw,42px); line-height:1.2}
-.dark blockquote{margin:0; padding-top:20px; border-top:1px solid #35302A}
-.dark blockquote p{font-family:Prata,serif; font-size:19px; line-height:1.55; color:var(--ivory)}
-.dark blockquote cite{display:block; margin-top:14px; font-style:normal; font-family:"Barlow Condensed",sans-serif; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:#9A9088}
+.dark blockquote{margin:0; padding-top:22px; border-top:1px solid #3E382F}
+/* Barlow, não Prata: serifada de traço fino sobre fundo escuro some.
+   Corpo maior e entrelinha mais folgada, que é o que as referências fazem. */
+.dark blockquote p{font-family:Barlow,system-ui,sans-serif; font-weight:400;
+  font-size:19.5px; line-height:1.68; color:#F4EFE6; letter-spacing:.004em}
+.dark blockquote cite{display:block; margin-top:15px; font-style:normal; font-family:"Barlow Condensed",sans-serif; font-size:13.5px; letter-spacing:.16em; text-transform:uppercase; color:#BCB2A6}
 .qgrid{display:grid; gap:30px; margin-top:38px}
 @media (min-width:800px){ .qgrid{grid-template-columns:repeat(2,1fr)} }
 
@@ -194,23 +241,23 @@ footer a{color:var(--accent)}
   </div>
 </header>
 
-<div class="hero">
-  <div class="hero-copy">
-    <p class="lbl">Triq It-Trill · San Pawl il-Baħar</p>
-    <h1 style="margin-top:18px">Lorant and Anara. Qawra, every day.</h1>
-    <p class="lede">Two people, one room, and a lot of backs. Lorant has been working as a therapist since 1994, and starts with the part most places skip: working out what is causing the pain before touching anything. Anara Uzhanova handles the lymphatic side.</p>
+<header class="hero">
+  <img class="hero-bg" src="img/hero-sessao.jpg" width="1600" height="1066" alt="Lorant working on a client's back in the Qawra clinic" fetchpriority="high" decoding="async">
+  <div class="hero-scrim"></div>
+  <div class="wrap hero-copy">
+    <p class="lbl">Qawra, Malta · Open every day</p>
+    <h1>Back pain, found before you point at it.</h1>
+    <p class="lede">Deep tissue, sports massage and spinal work. Lorant works out what is causing the pain before he touches anything.</p>
+    <a class="top-cta hero-cta" data-wa="hero" href="#">Message on WhatsApp</a>
   </div>
-  <div class="hero-portrait">
-    <img src="img/lorant.jpg" width="820" height="1324" alt="Lorant in the clinic in Qawra" decoding="async">
-  </div>
-</div>
+</header>
 
-<div class="confidence">
-  <div class="wrap" style="display:flex; gap:26px; flex-wrap:wrap">
-    <span><b>Since 1994</b> a therapist</span>
-    <span><b>4.9</b> Google · 61 reviews</span>
-    <span><b>100%</b> recommend on Facebook</span>
-    <span><b>Open</b> every day from 9</span>
+<div class="numeros">
+  <div class="wrap numeros-grade">
+    <div><b>1994</b><span>A therapist since</span></div>
+    <div><b>4.9</b><span>Google · 61 reviews</span></div>
+    <div><b>100%</b><span>Recommend on Facebook</span></div>
+    <div><b>7</b><span>Days a week</span></div>
   </div>
 </div>
 
@@ -221,9 +268,10 @@ footer a{color:var(--accent)}
       <h2 style="margin-top:14px">Most people arrive having already tried somewhere else.</h2>
       <p class="lede">A spa, a chiropractor, the place down the road. It comes up again and again in the reviews: the pain came back because the work went where it hurt, not where it started.</p>
       <p class="lede" style="margin-top:16px">The line people repeat about Lorant is how quickly he works out what is actually wrong. One reviewer wrote that he hits every spot without being told where they are.</p>
-      <figure class="foto">
-        <img src="img/atendendo.jpg" width="540" height="960" alt="Lorant working on a client's shoulder on a portable table" loading="lazy" decoding="async">
-        <figcaption>A session on the portable table. Photo from the clinic's own page.</figcaption>
+      <figure class="foto dupla">
+        <img src="img/lorant.jpg" width="820" height="1324" alt="Lorant in the clinic" loading="lazy" decoding="async">
+        <img src="img/atendendo.jpg" width="540" height="960" alt="Lorant working on a client on a portable table" loading="lazy" decoding="async">
+        <figcaption>Lorant in the room on Triq It-Trill, and a session on the portable table. Both from the clinic's own page.</figcaption>
       </figure>
     </div>
     <div>
@@ -252,12 +300,12 @@ footer a{color:var(--accent)}
 
     <div class="treat">
       <div role="tablist" aria-label="Treatments">
-        <button role="tab" id="t-1" aria-controls="p-1" aria-selected="true"  tabindex="0">Deep tissue</button>
-        <button role="tab" id="t-2" aria-controls="p-2" aria-selected="false" tabindex="-1">Sports massage</button>
-        <button role="tab" id="t-3" aria-controls="p-3" aria-selected="false" tabindex="-1">Trigger point</button>
-        <button role="tab" id="t-4" aria-controls="p-4" aria-selected="false" tabindex="-1">Adjustment</button>
-        <button role="tab" id="t-5" aria-controls="p-5" aria-selected="false" tabindex="-1">Cupping &amp; Y strap</button>
-        <button role="tab" id="t-6" aria-controls="p-6" aria-selected="false" tabindex="-1">Lymphatic drainage</button>
+        <button role="tab" data-zonas="ombros dorsal lombar" id="t-1" aria-controls="p-1" aria-selected="true"  tabindex="0">Deep tissue</button>
+        <button role="tab" data-zonas="ombros coxas panturrilhas" id="t-2" aria-controls="p-2" aria-selected="false" tabindex="-1">Sports massage</button>
+        <button role="tab" data-zonas="pescoco ombros dorsal" id="t-3" aria-controls="p-3" aria-selected="false" tabindex="-1">Trigger point</button>
+        <button role="tab" data-zonas="pescoco dorsal lombar" id="t-4" aria-controls="p-4" aria-selected="false" tabindex="-1">Adjustment</button>
+        <button role="tab" data-zonas="dorsal lombar pescoco" id="t-5" aria-controls="p-5" aria-selected="false" tabindex="-1">Cupping &amp; Y strap</button>
+        <button role="tab" data-zonas="bracos coxas panturrilhas" id="t-6" aria-controls="p-6" aria-selected="false" tabindex="-1">Lymphatic drainage</button>
       </div>
 
       <div role="tabpanel" id="p-1" aria-labelledby="t-1">
@@ -324,6 +372,49 @@ footer a{color:var(--accent)}
           <div><span class="lbl">With</span><span class="val">Anara</span></div>
         </div>
         <a class="tp-cta" data-wa="t6" href="#">Ask about this</a>
+      </div>
+
+      <div class="mapa-col">
+        <p class="mapa-tit">Where it works</p>
+        <svg class="mapa" viewBox="0 0 200 430" role="img" aria-label="Diagram of the body, seen from behind, with the areas each treatment works on">
+          <g class="silhueta">
+            <circle cx="100" cy="32" r="20"/>
+            <path d="M88 50 L88 61 C70 65 58 77 55 93 L47 135 C45 145 54 148 57 138
+                     L66 105 L70 177 C71 195 73 207 75 221 L80 301
+                     C81 317 83 339 85 357 L88 401 C89 410 99 410 99 401
+                     L100 302 L101 401 C101 410 111 410 112 401
+                     L115 357 C117 339 119 317 120 301 L125 221
+                     C127 207 129 195 130 177 L134 105 L143 138
+                     C146 148 155 145 153 135 L145 93 C142 77 130 65 112 61 L112 50 Z"/>
+          </g>
+          <g class="coluna">
+            <line x1="100" y1="70" x2="100" y2="196"/>
+            <g class="vert">
+              <line x1="93" y1="80"  x2="107" y2="80"/>
+              <line x1="93" y1="94"  x2="107" y2="94"/>
+              <line x1="92" y1="108" x2="108" y2="108"/>
+              <line x1="92" y1="122" x2="108" y2="122"/>
+              <line x1="91" y1="138" x2="109" y2="138"/>
+              <line x1="91" y1="154" x2="109" y2="154"/>
+              <line x1="90" y1="171" x2="110" y2="171"/>
+              <line x1="90" y1="188" x2="110" y2="188"/>
+            </g>
+          </g>
+          <g class="zonas">
+            <ellipse class="z" data-z="pescoco"      cx="100" cy="76"  rx="16" ry="11"/>
+            <ellipse class="z" data-z="ombros"       cx="76"  cy="94"  rx="17" ry="13"/>
+            <ellipse class="z" data-z="ombros"       cx="124" cy="94"  rx="17" ry="13"/>
+            <ellipse class="z" data-z="dorsal"       cx="100" cy="126" rx="31" ry="25"/>
+            <ellipse class="z" data-z="lombar"       cx="100" cy="180" rx="27" ry="21"/>
+            <ellipse class="z" data-z="bracos"       cx="57"  cy="120" rx="9"  ry="26"/>
+            <ellipse class="z" data-z="bracos"       cx="143" cy="120" rx="9"  ry="26"/>
+            <ellipse class="z" data-z="coxas"        cx="88"  cy="256" rx="11" ry="32"/>
+            <ellipse class="z" data-z="coxas"        cx="112" cy="256" rx="11" ry="32"/>
+            <ellipse class="z" data-z="panturrilhas" cx="90"  cy="344" rx="9"  ry="26"/>
+            <ellipse class="z" data-z="panturrilhas" cx="110" cy="344" rx="9"  ry="26"/>
+          </g>
+        </svg>
+        <p class="mapa-nota">Seen from behind. Highlighted for the treatment selected on the left.</p>
       </div>
     </div>
   </div>
@@ -440,6 +531,15 @@ document.querySelectorAll("[data-wa]").forEach(function(el){
   var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
   if(!tabs.length) return;
 
+  var zonas = [].slice.call(document.querySelectorAll(".z"));
+
+  function acender(tab){
+    var lista = (tab.getAttribute("data-zonas") || "").split(" ");
+    zonas.forEach(function(z){
+      z.classList.toggle("on", lista.indexOf(z.getAttribute("data-z")) !== -1);
+    });
+  }
+
   function select(tab){
     tabs.forEach(function(t){
       var on = (t === tab);
@@ -447,7 +547,11 @@ document.querySelectorAll("[data-wa]").forEach(function(el){
       t.tabIndex = on ? 0 : -1;
       document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
     });
+    acender(tab);
   }
+
+  var inicial = tabs.filter(function(t){ return t.getAttribute("aria-selected") === "true"; })[0] || tabs[0];
+  acender(inicial);
 
   tabs.forEach(function(tab, i){
     tab.addEventListener("click", function(){ select(tab); });
