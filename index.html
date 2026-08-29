@@ -36,10 +36,22 @@
 :root{
   --ivory:#F6F1E8; --ivory-2:#EFE9DE; --hair:#D6CEC1; --hair-2:#C4BAA9;
   --near:#141210; --near-2:#221F1B;
-  --ink-2:#6B6259; --ink-3:#8C8378;
-  --accent:#A45D5D;
+  --ink-2:#6B6259; --ink-3:#6E665C;   /* era #8C8378 = 3,3:1. Agora 5,02:1 */
+  --accent:#944E4D;   /* era #A45D5D = 4,34:1 nos dois usos. Agora 5,40:1 */
 }
 *{box-sizing:border-box}
+
+/* As partes que não desenhei ainda carregam o desenho: seleção, barra de
+   rolagem, sublinhado e os algarismos. Sem isso a página chega com o
+   default do navegador, que não pertence a sistema nenhum. */
+::selection{background:var(--accent); color:var(--ivory)}
+::-moz-selection{background:var(--accent); color:var(--ivory)}
+html{scrollbar-color:var(--hair-2) var(--ivory-2); scrollbar-width:thin; caret-color:var(--accent)}
+::-webkit-scrollbar{width:11px; height:11px}
+::-webkit-scrollbar-track{background:var(--ivory-2)}
+::-webkit-scrollbar-thumb{background:var(--hair-2); border:3px solid var(--ivory-2); border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:var(--ink-3)}
+a{text-underline-offset:.18em; text-decoration-thickness:from-font}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{
@@ -83,7 +95,7 @@ header.top{
   header.top{padding:12px 0}
   .brand{font-size:16px; gap:10px; line-height:1.1}
   .brand .mark{width:36px; height:36px}
-  .brand small{font-size:9.5px; letter-spacing:.18em; margin-top:2px}
+  .brand small{font-size:11px; letter-spacing:.14em; margin-top:2px}
   .top-cta{font-size:12px; padding:12px 14px; letter-spacing:.1em; white-space:nowrap}
 }
 
@@ -111,19 +123,13 @@ header.top{
 }
 
 /* ---- faixa de números (padrão visto na Malta-Ballston) ---- */
-.numeros{border-bottom:1px solid var(--hair); background:var(--ivory-2)}
+.numeros{border-bottom:1px solid var(--hair); background:var(--ivory-2); padding:10px 0}
 .numeros-grade{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--hair)}
 @media (min-width:760px){ .numeros-grade{grid-template-columns:repeat(4,1fr)} }
 .numeros-grade > div{background:var(--ivory-2); padding:26px 20px; text-align:center}
-.numeros-grade b{display:block; font-family:Prata,serif; font-weight:400; font-size:34px; line-height:1; color:var(--near)}
+.numeros-grade b{display:block; font-family:Prata,serif; font-weight:400; font-size:34px; line-height:1; color:var(--near); font-variant-numeric:tabular-nums}
 .numeros-grade span{display:block; margin-top:9px; font-family:"Barlow Condensed",sans-serif;
   font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3)}
-.portrait-note{
-  border:1px dashed #C9A227; background:#FBF0D8; color:#6B5310;
-  padding:14px 16px; font-size:14px; line-height:1.55; max-width:44ch;
-}
-.portrait-note b{display:block; font-family:"Barlow Condensed",sans-serif; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; margin-bottom:5px}
-
 /* ---- fotos com legenda ---- */
 figure.foto{margin:26px 0 0}
 figure.foto img{width:100%; height:auto; display:block; border:1px solid var(--hair)}
@@ -140,14 +146,6 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
 .faixa img{width:100%; height:auto; display:block; border:1px solid var(--hair)}
 .faixa figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-serif;
   font-size:14px; letter-spacing:.04em; color:var(--ink-3)}
-
-/* ---- confidence line ---- */
-.confidence{
-  border-bottom:1px solid var(--hair); padding:22px 0;
-  font-family:"Barlow Condensed",sans-serif; font-size:16px; letter-spacing:.14em;
-  text-transform:uppercase; color:var(--ink-2); display:flex; gap:26px; flex-wrap:wrap;
-}
-.confidence b{color:var(--near); font-weight:600}
 
 /* ---- about: fotos em camadas com legenda ---- */
 .about{display:grid; gap:34px}
@@ -189,7 +187,7 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
 .tp-meta{display:flex; gap:26px; flex-wrap:wrap; margin-top:24px; padding-top:18px; border-top:1px solid var(--hair)}
 .tp-meta div{display:grid; gap:3px}
 .tp-meta .lbl{font-size:11.5px}
-.tp-meta .val{font-family:"Barlow Condensed",sans-serif; font-size:18px; font-weight:500; letter-spacing:.04em}
+.tp-meta .val{font-family:"Barlow Condensed",sans-serif; font-size:18px; font-weight:500; letter-spacing:.04em; font-variant-numeric:tabular-nums}
 .tp-cta{
   display:inline-flex; align-items:center; min-height:48px; margin-top:24px;
   background:var(--near); color:var(--ivory); text-decoration:none; padding:13px 24px;
@@ -208,15 +206,16 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
 /* ---- mapa do corpo ---- */
 @media (min-width:1040px){ .treat{grid-template-columns:250px minmax(0,1fr) 224px} }
 .mapa-col{
-  border-top:1px solid var(--hair); padding:26px 22px 24px;
-  display:flex; flex-direction:column; align-items:center; background:var(--ivory);
+  border-top:1px solid var(--hair); padding:24px 20px 22px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:var(--ivory);
 }
 @media (min-width:1040px){ .mapa-col{border-top:0; border-left:1px solid var(--hair)} }
 .mapa-tit{
-  margin:0 0 16px; font-family:"Barlow Condensed",sans-serif; font-weight:600;
+  margin:0 0 14px; font-family:"Barlow Condensed",sans-serif; font-weight:600;
   font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3);
 }
-.mapa{width:100%; max-width:186px; height:auto; display:block}
+.mapa{width:100%; max-width:150px; height:auto; display:block}
 .silhueta{fill:none; stroke:var(--hair-2); stroke-width:1.5; stroke-linejoin:round; stroke-linecap:round}
 .coluna line{stroke:var(--ink-3); stroke-width:1.4; stroke-linecap:round}
 .coluna .vert line{stroke-width:2.2; opacity:.55}
@@ -224,7 +223,7 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
 .z.on{opacity:.72}
 @media (prefers-reduced-motion:reduce){ .z{transition:none} }
 .mapa-nota{
-  margin:16px 0 0; font-family:"Barlow Condensed",sans-serif; font-size:12.5px;
+  margin:14px 0 0; font-family:"Barlow Condensed",sans-serif; font-size:12.5px;
   line-height:1.5; letter-spacing:.03em; color:var(--ink-3); text-align:center; max-width:22ch;
 }
 
@@ -276,7 +275,6 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
   <img class="hero-bg" src="img/hero-sessao.jpg" width="1600" height="1066" alt="Lorant working on a client's back in the Qawra clinic" fetchpriority="high" decoding="async">
   <div class="hero-scrim"></div>
   <div class="wrap hero-copy">
-    <p class="lbl">Qawra, Malta · Open every day</p>
     <h1>Back pain, found before you point at it.</h1>
     <p class="lede">Deep tissue, sports massage and spinal work. Lorant works out what is causing the pain before he touches anything.</p>
     <a class="top-cta hero-cta" data-wa="hero" href="#">Message on WhatsApp</a>
@@ -295,8 +293,7 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
 <section>
   <div class="wrap about">
     <div>
-      <p class="lbl">The room</p>
-      <h2 style="margin-top:14px">Most people arrive having already tried somewhere else.</h2>
+      <h2>Most people arrive having already tried somewhere else.</h2>
       <p class="lede">A spa, a chiropractor, the place down the road. It comes up again and again in the reviews: the pain came back because the work went where it hurt, not where it started.</p>
       <p class="lede" style="margin-top:16px">The line people repeat about Lorant is how quickly he works out what is actually wrong. One reviewer wrote that he hits every spot without being told where they are.</p>
       <figure class="foto dupla">
@@ -306,12 +303,11 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
       </figure>
     </div>
     <div>
-      <p class="lbl">Being straight</p>
-      <h2 style="margin-top:14px">A therapist. Not a chiropractor, not a doctor.</h2>
+      <h2>A therapist. Not a chiropractor, not a doctor.</h2>
       <p class="lede">Those are his own words, posted on his page in September 2024:</p>
       <blockquote class="own">
         <p>"Please note that I am a therapist, not a chiropractor, and I am not a doctor. I have developed my own unique massage therapy approach, which combines all the techniques I’ve learned over the years to address your specific issues. This is not just a simple massage or a quick bone adjustment—it’s a comprehensive, personalized treatment."</p>
-        <cite>Lorant, on the clinic's Facebook page</cite>
+        <cite>Lorant · Facebook</cite>
       </blockquote>
       <p class="lede" style="margin-top:20px">So this page does not diagnose anything and does not promise what one session will do. If something needs a doctor, it needs a doctor.</p>
     </div>
@@ -326,8 +322,7 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
 
 <section style="padding-top:0">
   <div class="wrap">
-    <p class="lbl">Treatments</p>
-    <h2 style="font-size:clamp(26px,3.6vw,38px); margin:14px 0 26px">What happens on the table</h2>
+    <h2 style="font-size:clamp(26px,3.6vw,38px); margin:0 0 26px">What happens on the table</h2>
 
     <div class="treat">
       <div role="tablist" aria-label="Treatments">
@@ -458,7 +453,7 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
             <circle class="z" data-z="panturrilhas" cx="121" cy="396" r="10"/>
           </g>
         </svg>
-        <p class="mapa-nota">Seen from behind. Highlighted for the treatment selected on the left.</p>
+        <p class="mapa-nota">Seen from behind. Highlighted for the selected treatment.</p>
       </div>
     </div>
   </div>
@@ -466,8 +461,7 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
 
 <section class="dark">
   <div class="wrap">
-    <p class="lbl">In their words</p>
-    <h2 style="margin-top:14px">Sixty one reviews. Fifty eight of them five stars.</h2>
+    <h2>Sixty one reviews. Fifty eight of them five stars.</h2>
     <p class="lede" style="margin-top:14px">Copied word for word from Google. Two of the sixty one are one star, and this page is not pretending otherwise.</p>
     <div class="qgrid">
       <blockquote><p>"Lorant and his wife Anara are absolutely outstanding at what they do… I have tried massage therapies in Thailand, Edinburgh, Serbia and others here in Malta, this is amongst the very best ones out there!"</p><cite>Bojan Brescanski · Google</cite></blockquote>
@@ -480,8 +474,7 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
 
 <section>
   <div class="wrap">
-    <p class="lbl">Finding the place</p>
-    <h2 style="font-size:clamp(26px,3.6vw,38px); margin:14px 0 26px">Qawra, on Triq It-Trill</h2>
+    <h2 style="font-size:clamp(26px,3.6vw,38px); margin:0 0 26px">Qawra, on Triq It-Trill</h2>
     <div class="loc">
       <div>
         <h3>Where</h3>
@@ -507,8 +500,7 @@ footer a{color:var(--accent); display:inline-flex; align-items:center; min-heigh
 
 <section class="final">
   <div class="wrap">
-    <p class="lbl">Last thing</p>
-    <h2 style="margin-top:16px">Tell them where it hurts.</h2>
+    <h2>Tell them where it hurts.</h2>
     <p class="lede" style="margin:18px auto 0">Say what hurts, how long it has been going on, and what you have already tried. That is enough to start.</p>
     <a class="top-cta" data-wa="final" href="#" style="margin-top:28px">Message +356 9926 0483</a>
   </div>
