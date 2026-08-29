@@ -38,6 +38,7 @@
   --near:#141210; --near-2:#221F1B;
   --ink-2:#6B6259; --ink-3:#6E665C;   /* era #8C8378 = 3,3:1. Agora 5,02:1 */
   --accent:#944E4D;
+  --ease-out:cubic-bezier(0.23, 1, 0.32, 1);   /* a curva da tabela, nao aproximada */
   /* o capítulo escuro era um segundo tema informal, sem token nenhum */
   --on-dark:#F4EFE6; --on-dark-2:#D2C9BE; --on-dark-3:#BCB2A6; --dark-rule:#3E382F;
   /* marcador [PREENCHER] */
@@ -57,7 +58,10 @@ html{scrollbar-color:var(--hair-2) var(--ivory-2); scrollbar-width:thin; caret-c
 ::-webkit-scrollbar-thumb:hover{background:var(--ink-3)}
 a{text-underline-offset:.18em; text-decoration-thickness:from-font}
 html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .top-cta:active,.tp-cta:active{transform:none}
+}
 body{
   margin:0; background:var(--ivory); color:var(--near);
   font-family:Barlow,system-ui,sans-serif; font-size:17px; line-height:1.65;
@@ -88,8 +92,11 @@ header.top{
   letter-spacing:.14em; text-transform:uppercase; text-decoration:none;
   background:var(--near); color:var(--ivory); padding:13px 20px; border-radius:1px;
   min-height:46px; display:inline-flex; align-items:center;
-  transition:background 150ms ease;   /* cor/hover: `ease`, 100–160ms */
+  transition:background 150ms ease, transform 140ms var(--ease-out);
 }
+/* Nenhum botão tinha resposta ao toque. No celular o WhatsApp demora a
+   abrir e nada confirmava que o toque pegou. */
+.top-cta:active{transform:scale(.96)}
 .top-cta:hover,.top-cta:focus-visible{background:var(--accent)}
 
 /* Num telefone de 360 o cabeçalho comia 235px de uma tela de 780: a marca
@@ -188,7 +195,14 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
   [role="tab"]:hover{background:var(--ivory-2); color:var(--near)}
 }
 [role="tab"][aria-selected="true"]{background:var(--ivory-2); color:var(--near); box-shadow:inset 3px 0 0 var(--accent)}
-[role="tabpanel"]{padding:32px 28px; min-height:270px}
+/* Só opacidade, sem deslocamento: é texto sendo lido. O painel responde
+   em 180ms enquanto o mapa termina de contar a história em 860ms. */
+[role="tabpanel"]{
+  padding:32px 28px; min-height:270px;
+  transition:opacity 180ms var(--ease-out), display 180ms allow-discrete;
+}
+@starting-style{ [role="tabpanel"]:not([hidden]){ opacity:0 } }
+@media (prefers-reduced-motion:reduce){ [role="tabpanel"]{transition-duration:0.01ms} }
 [role="tabpanel"] h3{font-size:clamp(24px,3vw,32px); line-height:1.2; margin-bottom:12px}
 [role="tabpanel"] p{color:var(--ink-2); max-width:52ch}
 .tp-meta{display:flex; gap:26px; flex-wrap:wrap; margin-top:24px; padding-top:18px; border-top:1px solid var(--hair)}
@@ -201,8 +215,9 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
   background:var(--near); color:var(--ivory); text-decoration:none; padding:13px 24px;
   font-family:"Barlow Condensed",sans-serif; font-weight:600; font-size:15px;
   letter-spacing:.14em; text-transform:uppercase; border-radius:1px;
-  transition:background 150ms ease;   /* cor/hover: `ease`, 100–160ms */
+  transition:background 150ms ease, transform 140ms var(--ease-out);
 }
+.tp-cta:active{transform:scale(.96)}
 .tp-cta:hover,.tp-cta:focus-visible{background:var(--accent)}
 
 /* ---- citação do próprio dono ---- */
@@ -227,9 +242,25 @@ figure.foto figcaption{margin-top:10px; font-family:"Barlow Condensed",sans-seri
 .silhueta{fill:none; stroke:var(--hair-2); stroke-width:1.5; stroke-linejoin:round; stroke-linecap:round}
 .coluna line{stroke:var(--ink-3); stroke-width:1.4; stroke-linecap:round}
 .coluna .vert line{stroke-width:2.2; opacity:.55}
-.z{fill:var(--accent); opacity:0; transition:opacity 220ms ease}
-.z.on{opacity:.72}
-@media (prefers-reduced-motion:reduce){ .z{transition:none} }
+/* Trocar de tratamento anima o texto E o mapa na mesma resposta.
+   Os pontos que SAEM vão juntos e rápido (160ms); só depois de uma pausa
+   de 240ms os novos entram, escalonados 120ms por REGIÃO — não por ponto,
+   senão o ombro esquerdo acende antes do direito e parece falha.
+   Cada ponto nasce em 60% e cresce: movimento nota-se mais que opacidade,
+   então dá para ser perceptível sem cobrar mais tempo. Nunca de zero. */
+.z{
+  fill:var(--accent); opacity:0;
+  transform-box:fill-box; transform-origin:center; transform:scale(.6);
+  transition:opacity 160ms var(--ease-out), transform 160ms var(--ease-out);
+}
+.z.on{
+  opacity:.72; transform:scale(1);
+  transition:opacity 380ms var(--ease-out), transform 380ms var(--ease-out);
+  transition-delay:calc(240ms + var(--i, 0) * 120ms);
+}
+@media (prefers-reduced-motion:reduce){
+  .z, .z.on{transition:none; transition-delay:0s; transform:none}
+}
 .mapa-nota{
   margin:14px 0 0; font-family:"Barlow Condensed",sans-serif; font-size:12.5px;
   line-height:1.5; letter-spacing:.03em; color:var(--ink-3); text-align:center; max-width:22ch;
@@ -590,7 +621,10 @@ document.querySelectorAll("[data-wa]").forEach(function(el){
   function acender(tab){
     var lista = (tab.getAttribute("data-zonas") || "").split(" ");
     zonas.forEach(function(z){
-      z.classList.toggle("on", lista.indexOf(z.getAttribute("data-z")) !== -1);
+      // indice pela REGIAO: o par esquerdo/direito acende junto
+      var idx = lista.indexOf(z.getAttribute("data-z"));
+      if (idx !== -1) z.style.setProperty("--i", idx);
+      z.classList.toggle("on", idx !== -1);
     });
   }
 
