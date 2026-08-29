@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Mobile Spine Clinic — Qawra, Malta</title>
+<meta name="description" content="Lorant and Anara. Massage therapy and spinal work in Qawra, Malta. Open every day.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Barlow:wght@400;500&family=Prata&display=swap">
+<style>
+/* ===== OPÇÃO F · editorial-service-booking =====
+   Sistema visual da skill, à risca:
+     · papel marfim quente + capítulos quase pretos
+     · serifada de alto contraste (Prata) + rótulos em sans compacta
+     · filete fino, raio mínimo, recorte editorial, muito respiro
+     · PRETO na ação decisiva; UM acento discreto só para seleção/status
+     · proibido cartão brilhante, vidro, gradiente barulhento
+   Metade de agendamento da skill NÃO se aplica ao ciclo A: não há
+   disponibilidade em servidor, só WhatsApp. Seletor de tratamento
+   implementado com tablist/tab/tabpanel e setas do teclado, como ela pede.
+   Preço fica [PREENCHER] — a skill exige preço, o briefing não tem.
+
+   MOVIMENTO — passado pela skill `animate`:
+   · esta página quase não anima, e isso é uma decisão, não um esquecimento.
+     Nada de reveal por rolagem: o conteúdo é texto que a pessoa está
+     lendo, e a `animate` é explícita — dado que o usuário está lendo não
+     se mexe por estilo.
+   · só há transição de COR: aba e botões, 150–180ms com `ease`, que é o
+     que a tabela dela manda para cor e hover.
+   · nenhum hover com movimento, então não há portão de ponteiro a criar.
+   · sem deslocamento em lugar nenhum, então prefers-reduced-motion não
+     tem o que reduzir além do scroll-behavior, que já está tratado. */
+
+:root{
+  --ivory:#F6F1E8; --ivory-2:#EFE9DE; --hair:#D6CEC1; --hair-2:#C4BAA9;
+  --near:#141210; --near-2:#221F1B;
+  --ink-2:#6B6259; --ink-3:#8C8378;
+  --accent:#A45D5D;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0; background:var(--ivory); color:var(--near);
+  font-family:Barlow,system-ui,sans-serif; font-size:17px; line-height:1.65;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+h1,h2,h3{margin:0; font-family:Prata,Georgia,serif; font-weight:400; text-wrap:balance; letter-spacing:-.005em}
+p{margin:0}
+.wrap{max-width:1160px; margin:0 auto; padding:0 24px}
+section{padding:86px 0}
+.lbl{
+  font-family:"Barlow Condensed",sans-serif; font-weight:600; font-size:13px;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3);
+}
+.lede{font-size:17.5px; color:var(--ink-2); max-width:58ch; line-height:1.75}
+
+/* ---- header ---- */
+header.top{
+  border-bottom:1px solid var(--hair); padding:18px 0;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+}
+.top .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; width:100%}
+.brand{font-family:Prata,serif; font-size:19px; letter-spacing:-.01em;
+  display:flex; align-items:center; gap:13px}
+.brand .mark{width:46px; height:46px; border-radius:50%; flex:none; display:block}
+.brand small{display:block; font-family:"Barlow Condensed",sans-serif; font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3); margin-top:2px}
+.top-cta{
+  font-family:"Barlow Condensed",sans-serif; font-weight:600; font-size:14px;
+  letter-spacing:.14em; text-transform:uppercase; text-decoration:none;
+  background:var(--near); color:var(--ivory); padding:13px 20px; border-radius:1px;
+  min-height:46px; display:inline-flex; align-items:center;
+  transition:background 150ms ease;   /* cor/hover: `ease`, 100–160ms */
+}
+.top-cta:hover,.top-cta:focus-visible{background:var(--accent)}
+
+/* ---- hero: retrato documental cortado + frase grande ---- */
+.hero{display:grid; gap:0; border-bottom:1px solid var(--hair)}
+@media (min-width:900px){ .hero{grid-template-columns:1fr 1fr; align-items:stretch} }
+.hero-copy{padding:76px 24px 76px; display:flex; flex-direction:column; justify-content:center}
+@media (min-width:900px){ .hero-copy{padding-left:max(24px, calc((100vw - 1160px)/2 + 24px))} }
+.hero h1{font-size:clamp(34px,5.4vw,58px); line-height:1.14; max-width:14ch}
+.hero .lede{margin-top:20px}
+.hero-portrait{
+  background:var(--ivory-2); border-left:1px solid var(--hair);
+  min-height:340px; position:relative; overflow:hidden;
+}
+.hero-portrait img{width:100%; height:100%; object-fit:cover; display:block}
+.portrait-note{
+  border:1px dashed #C9A227; background:#FBF0D8; color:#6B5310;
+  padding:14px 16px; font-size:14px; line-height:1.55; max-width:44ch;
+}
+.portrait-note b{display:block; font-family:"Barlow Condensed",sans-serif; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; margin-bottom:5px}
+
+/* ---- confidence line ---- */
+.confidence{
+  border-bottom:1px solid var(--hair); padding:22px 0;
+  font-family:"Barlow Condensed",sans-serif; font-size:16px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-2); display:flex; gap:26px; flex-wrap:wrap;
+}
+.confidence b{color:var(--near); font-weight:600}
+
+/* ---- about: fotos em camadas com legenda ---- */
+.about{display:grid; gap:34px}
+@media (min-width:880px){ .about{grid-template-columns:1fr 1fr; gap:56px; align-items:start} }
+.about h2{font-size:clamp(26px,3.6vw,38px); line-height:1.22; margin-bottom:16px}
+
+/* ---- seletor de tratamento ---- */
+.treat{display:grid; gap:0; border:1px solid var(--hair); background:var(--ivory)}
+@media (min-width:860px){ .treat{grid-template-columns:270px 1fr} }
+[role="tablist"]{display:flex; flex-direction:column; border-bottom:1px solid var(--hair)}
+@media (min-width:860px){ [role="tablist"]{border-bottom:0; border-right:1px solid var(--hair)} }
+[role="tab"]{
+  appearance:none; background:transparent; border:0; border-bottom:1px solid var(--hair);
+  text-align:left; padding:16px 20px; min-height:52px; cursor:pointer;
+  font-family:"Barlow Condensed",sans-serif; font-size:16px; font-weight:500;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--ink-2);
+  transition:background .18s ease, color .18s ease;
+}
+[role="tab"]:last-child{border-bottom:0}
+[role="tab"]:hover{background:var(--ivory-2); color:var(--near)}
+[role="tab"][aria-selected="true"]{background:var(--ivory-2); color:var(--near); box-shadow:inset 3px 0 0 var(--accent)}
+[role="tabpanel"]{padding:32px 28px; min-height:270px}
+[role="tabpanel"] h3{font-size:clamp(24px,3vw,32px); line-height:1.2; margin-bottom:12px}
+[role="tabpanel"] p{color:var(--ink-2); max-width:52ch}
+.tp-meta{display:flex; gap:26px; flex-wrap:wrap; margin-top:24px; padding-top:18px; border-top:1px solid var(--hair)}
+.tp-meta div{display:grid; gap:3px}
+.tp-meta .lbl{font-size:11.5px}
+.tp-meta .val{font-family:"Barlow Condensed",sans-serif; font-size:18px; font-weight:500; letter-spacing:.04em}
+.tp-cta{
+  display:inline-flex; align-items:center; min-height:48px; margin-top:24px;
+  background:var(--near); color:var(--ivory); text-decoration:none; padding:13px 24px;
+  font-family:"Barlow Condensed",sans-serif; font-weight:600; font-size:15px;
+  letter-spacing:.14em; text-transform:uppercase; border-radius:1px;
+  transition:background 150ms ease;   /* cor/hover: `ease`, 100–160ms */
+}
+.tp-cta:hover,.tp-cta:focus-visible{background:var(--accent)}
+
+/* ---- citação do próprio dono ---- */
+.own{margin:22px 0 0; padding-left:20px; border-left:2px solid var(--accent); max-width:60ch}
+.own p{font-family:Prata,serif; font-size:clamp(18px,2.1vw,22px); line-height:1.45; color:var(--near)}
+.own cite{display:block; margin-top:13px; font-family:"Barlow Condensed",sans-serif; font-style:normal;
+  font-size:12.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-3)}
+
+/* ---- capítulo escuro ---- */
+.dark{background:var(--near); color:var(--ivory)}
+.dark .lbl{color:#9A9088}
+.dark .lede{color:#C3BAB0}
+.dark h2{font-size:clamp(26px,3.8vw,42px); line-height:1.2}
+.dark blockquote{margin:0; padding-top:20px; border-top:1px solid #35302A}
+.dark blockquote p{font-family:Prata,serif; font-size:19px; line-height:1.55; color:var(--ivory)}
+.dark blockquote cite{display:block; margin-top:14px; font-style:normal; font-family:"Barlow Condensed",sans-serif; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:#9A9088}
+.qgrid{display:grid; gap:30px; margin-top:38px}
+@media (min-width:800px){ .qgrid{grid-template-columns:repeat(2,1fr)} }
+
+/* ---- localização ---- */
+.loc{display:grid; gap:0; border:1px solid var(--hair)}
+@media (min-width:800px){ .loc{grid-template-columns:1fr 1fr} }
+.loc > div{padding:30px 28px}
+.loc > div + div{border-top:1px solid var(--hair)}
+@media (min-width:800px){ .loc > div + div{border-top:0; border-left:1px solid var(--hair)} }
+.loc h3{font-size:24px; margin-bottom:14px}
+.loc dl{margin:0; display:grid; gap:12px}
+.loc dt{font-family:"Barlow Condensed",sans-serif; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3)}
+.loc dd{margin:2px 0 0; font-size:16.5px}
+
+.fill{display:inline-block; background:#FBF0D8; border:1px dashed #C9A227; color:#6B5310; padding:1px 8px; font-size:14.5px; font-weight:500}
+
+.final{text-align:center; border-top:1px solid var(--hair)}
+.final h2{font-size:clamp(30px,5vw,52px); line-height:1.12; max-width:16ch; margin:0 auto}
+footer{border-top:1px solid var(--hair); padding:30px 0 56px; font-size:14.5px; color:var(--ink-3); line-height:1.9}
+footer a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><img class="mark" src="img/logo.jpg" width="420" height="420" alt="" decoding="async"><span>Mobile Spine Clinic<small>Qawra · Malta</small></span></div>
+    <a class="top-cta" data-wa="top" href="#">Book a session</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-copy">
+    <p class="lbl">Triq It-Trill · San Pawl il-Baħar</p>
+    <h1 style="margin-top:18px">Lorant and Anara. Qawra, every day.</h1>
+    <p class="lede">Two people, one room, and a lot of backs. Lorant has been working as a therapist since 1994, and starts with the part most places skip: working out what is causing the pain before touching anything. Anara Uzhanova handles the lymphatic side.</p>
+  </div>
+  <div class="hero-portrait">
+    <img src="img/lorant-anara.jpg" width="936" height="720" alt="Lorant and Anara" decoding="async">
+  </div>
+</div>
+
+<div class="confidence">
+  <div class="wrap" style="display:flex; gap:26px; flex-wrap:wrap">
+    <span><b>Since 1994</b> a therapist</span>
+    <span><b>4.9</b> Google · 61 reviews</span>
+    <span><b>100%</b> recommend on Facebook</span>
+    <span><b>Open</b> every day from 9</span>
+  </div>
+</div>
+
+<section>
+  <div class="wrap about">
+    <div>
+      <p class="lbl">The room</p>
+      <h2 style="margin-top:14px">Most people arrive having already tried somewhere else.</h2>
+      <p class="lede">A spa, a chiropractor, the place down the road. It comes up again and again in the reviews: the pain came back because the work went where it hurt, not where it started.</p>
+      <p class="lede" style="margin-top:16px">The line people repeat about Lorant is how quickly he works out what is actually wrong. One reviewer wrote that he hits every spot without being told where they are.</p>
+    </div>
+    <div>
+      <p class="lbl">Being straight</p>
+      <h2 style="margin-top:14px">A therapist. Not a chiropractor, not a doctor.</h2>
+      <p class="lede">Those are his own words, posted on his page in September 2024:</p>
+      <blockquote class="own">
+        <p>"Please note that I am a therapist, not a chiropractor, and I am not a doctor. I have developed my own unique massage therapy approach, which combines all the techniques I’ve learned over the years to address your specific issues. This is not just a simple massage or a quick bone adjustment—it’s a comprehensive, personalized treatment."</p>
+        <cite>Lorant, on the clinic's Facebook page</cite>
+      </blockquote>
+      <p class="lede" style="margin-top:20px">So this page does not diagnose anything and does not promise what one session will do. If something needs a doctor, it needs a doctor.</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <p class="lbl">Treatments</p>
+    <h2 style="font-size:clamp(26px,3.6vw,38px); margin:14px 0 26px">What happens on the table</h2>
+
+    <div class="treat">
+      <div role="tablist" aria-label="Treatments">
+        <button role="tab" id="t-1" aria-controls="p-1" aria-selected="true"  tabindex="0">Deep tissue</button>
+        <button role="tab" id="t-2" aria-controls="p-2" aria-selected="false" tabindex="-1">Sports massage</button>
+        <button role="tab" id="t-3" aria-controls="p-3" aria-selected="false" tabindex="-1">Trigger point</button>
+        <button role="tab" id="t-4" aria-controls="p-4" aria-selected="false" tabindex="-1">Adjustment</button>
+        <button role="tab" id="t-5" aria-controls="p-5" aria-selected="false" tabindex="-1">Cupping &amp; Y strap</button>
+        <button role="tab" id="t-6" aria-controls="p-6" aria-selected="false" tabindex="-1">Lymphatic drainage</button>
+      </div>
+
+      <div role="tabpanel" id="p-1" aria-labelledby="t-1">
+        <h3>Deep tissue</h3>
+        <p>Slow, heavy work into the layers a relaxing massage never reaches. This is the one people come back for, and the one that shows up most in the reviews.</p>
+        <div class="tp-meta">
+          <div><span class="lbl">Length</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
+          <div><span class="lbl">Price</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
+          <div><span class="lbl">With</span><span class="val">Lorant</span></div>
+        </div>
+        <a class="tp-cta" data-wa="t1" href="#">Ask about this</a>
+      </div>
+
+      <div role="tabpanel" id="p-2" aria-labelledby="t-2" hidden>
+        <h3>Sports massage</h3>
+        <p>For people who train. One regular writes that it is what keeps his tennis and squash going through an old injury, and singles out the stretching advice given afterwards.</p>
+        <div class="tp-meta">
+          <div><span class="lbl">Length</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
+          <div><span class="lbl">Price</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
+          <div><span class="lbl">With</span><span class="val">Lorant</span></div>
+        </div>
+        <a class="tp-cta" data-wa="t2" href="#">Ask about this</a>
+      </div>
+
+      <div role="tabpanel" id="p-3" aria-labelledby="t-3" hidden>
+        <h3>Trigger point</h3>
+        <p>Finding the knot that is sending pain somewhere else entirely. Often the reason a shoulder hurts when the problem is nowhere near the shoulder.</p>
+        <div class="tp-meta">
+          <div><span class="lbl">Length</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
+          <div><span class="lbl">Price</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
+          <div><span class="lbl">With</span><span class="val">Lorant</span></div>
+        </div>
+        <a class="tp-cta" data-wa="t3" href="#">Ask about this</a>
+      </div>
+
+      <div role="tabpanel" id="p-4" aria-labelledby="t-4" hidden>
+        <h3>Joint adjustment</h3>
+        <p>What reviewers call the cracking. It happens in the same session as the soft tissue work rather than being a separate appointment somewhere else. One reviewer said that is exactly what makes this better value than the alternatives on the island.</p>
+        <div class="tp-meta">
+          <div><span class="lbl">Length</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
+          <div><span class="lbl">Price</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
+          <div><span class="lbl">With</span><span class="val">Lorant</span></div>
+        </div>
+        <a class="tp-cta" data-wa="t4" href="#">Ask about this</a>
+      </div>
+
+      <div role="tabpanel" id="p-5" aria-labelledby="t-5" hidden>
+        <h3>Cupping and Y strap</h3>
+        <p>Both were added to the room a while back, and a reviewer named them specifically when describing what keeps the practice moving forward.</p>
+        <div class="tp-meta">
+          <div><span class="lbl">Length</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
+          <div><span class="lbl">Price</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
+          <div><span class="lbl">With</span><span class="val">Lorant</span></div>
+        </div>
+        <a class="tp-cta" data-wa="t5" href="#">Ask about this</a>
+      </div>
+
+      <div role="tabpanel" id="p-6" aria-labelledby="t-6" hidden>
+        <h3>Lymphatic drainage</h3>
+        <p>Anara Uzhanova's side of the practice. Reviewers who mention her put her on exactly the same level as Lorant.</p>
+        <div class="tp-meta">
+          <div><span class="lbl">Length</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
+          <div><span class="lbl">Price</span><span class="val"><span class="fill">[PREENCHER]</span></span></div>
+          <div><span class="lbl">With</span><span class="val">Anara</span></div>
+        </div>
+        <a class="tp-cta" data-wa="t6" href="#">Ask about this</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="wrap">
+    <p class="lbl">In their words</p>
+    <h2 style="margin-top:14px">Sixty one reviews. Fifty eight of them five stars.</h2>
+    <p class="lede" style="margin-top:14px">Copied word for word from Google. Two of the sixty one are one star, and this page is not pretending otherwise.</p>
+    <div class="qgrid">
+      <blockquote><p>"Lorant and his wife Anara are absolutely outstanding at what they do… I have tried massage therapies in Thailand, Edinburgh, Serbia and others here in Malta, this is amongst the very best ones out there!"</p><cite>Bojan Brescanski · Google</cite></blockquote>
+      <blockquote><p>"…The first time with a huge pain in my lower back - he fixed it! This time it was a stiff neck emergency - walked in like a robot and came out as if nothing happened!"</p><cite>Mark Sammut · Google</cite></blockquote>
+      <blockquote><p>"…What truly sets them apart is the extra attention and advice they give on stretching and self-massaging after training."</p><cite>Artur Lengyel · Google</cite></blockquote>
+      <blockquote><p>"Always professional, both Lorant and his wife know what they are doing and are hitting all spots, without even telling them. True masters at their craft."</p><cite>Kristina Ilievska · Google</cite></blockquote>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="lbl">Finding the place</p>
+    <h2 style="font-size:clamp(26px,3.6vw,38px); margin:14px 0 26px">Qawra, on Triq It-Trill</h2>
+    <div class="loc">
+      <div>
+        <h3>Where</h3>
+        <dl>
+          <dt>Address</dt><dd>11, Triq It-Trill<br>San Pawl il-Baħar (Qawra), Malta</dd>
+          <dt>Plus code</dt><dd>XC4C+8R</dd>
+          <dt>Step free access</dt><dd><span class="fill">[PREENCHER: acessibilidade]</span></dd>
+          <dt>Parking</dt><dd><span class="fill">[PREENCHER: estacionamento]</span></dd>
+        </dl>
+      </div>
+      <div>
+        <h3>When</h3>
+        <dl>
+          <dt>Monday to Friday</dt><dd>9:00 — 20:00</dd>
+          <dt>Saturday and Sunday</dt><dd>9:00 — 17:00</dd>
+          <dt>Booking</dt><dd>WhatsApp or a call to +356 9926 0483.<br>He asks people not to use Messenger, since he cannot check it during the day.</dd>
+          <dt>Languages</dt><dd>English. Reviews are also answered in Hungarian.</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <p class="lbl">Last thing</p>
+    <h2 style="margin-top:16px">Tell them where it hurts.</h2>
+    <p class="lede" style="margin:18px auto 0">Say what hurts, how long it has been going on, and what you have already tried. That is enough to start.</p>
+    <a class="top-cta" data-wa="final" href="#" style="margin-top:28px">Message +356 9926 0483</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Mobile Spine Clinic · 11, Triq It-Trill, San Pawl il-Baħar (Qawra), Malta<br>
+    <a data-wa="footer" href="#">+356 9926 0483</a> · Open every day · Mon–Fri 9:00–20:00 · Sat–Sun 9:00–17:00<br>
+    <span style="opacity:.8">Demonstration page. Not indexed.</span>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   CONFIG
+   ============================================================ */
+const CONFIG = {
+  businessName: "Mobile Spine Clinic",
+  whatsapp: "35699260483",          // número DO DONO (regra 3)
+  phoneDisplay: "+356 9926 0483",
+  address: "11, Triq It-Trill, San Pawl il-Baħar (Qawra), Malta",
+  plusCode: "XC4C+8R",
+  hours: { weekdays:"9:00 – 20:00", weekend:"9:00 – 17:00" },
+  rating: { google:{score:"4.9", count:61}, facebook:{recommend:"100%", count:30} },
+  messages: {
+    top:   "Hi! I'd like to book a session.",
+    t1:    "Hi! I'd like to ask about a deep tissue session.",
+    t2:    "Hi! I'd like to ask about sports massage.",
+    t3:    "Hi! I'd like to ask about trigger point therapy.",
+    t4:    "Hi! I'd like to ask about an adjustment.",
+    t5:    "Hi! I'd like to ask about cupping.",
+    t6:    "Hi! I'd like to ask Anara about lymphatic drainage.",
+    final: "Hi! Here's what's going on with me:",
+    footer:"Hi! I'd like to ask about a session."
+  }
+};
+
+/* ============================================================
+   INTEGRACOES — TODAS DESLIGADAS (regra 6 e regra 8 / LGPD)
+   Nota: a skill original prevê agenda online com disponibilidade
+   validada em servidor. No ciclo A isso não existe — o único canal
+   é o WhatsApp do dono. Ligar só no ciclo B, se ele quiser.
+   ============================================================ */
+const INTEGRACOES = {
+  googleAnalytics: { enabled:false, id:"" },
+  metaPixel:       { enabled:false, id:"" },
+  formspree:       { enabled:false, endpoint:"" },
+  planilha:        { enabled:false, endpoint:"" },
+  agendaOnline:    { enabled:false, url:"" }
+};
+
+document.querySelectorAll("[data-wa]").forEach(function(el){
+  var key = el.getAttribute("data-wa");
+  var msg = CONFIG.messages[key] || CONFIG.messages.top;
+  el.href = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg);
+  el.rel = "noopener"; el.target = "_blank";
+});
+
+/* ---- seletor de tratamento: tablist acessível ----
+   Setas movem, Home/End vão pras pontas, Enter e Espaço já funcionam
+   porque os tabs são <button> de verdade. */
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  if(!tabs.length) return;
+
+  function select(tab){
+    tabs.forEach(function(t){
+      var on = (t === tab);
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+  }
+
+  tabs.forEach(function(tab, i){
+    tab.addEventListener("click", function(){ select(tab); });
+    tab.addEventListener("keydown", function(e){
+      var n = null;
+      if(e.key === "ArrowDown" || e.key === "ArrowRight") n = tabs[(i + 1) % tabs.length];
+      else if(e.key === "ArrowUp" || e.key === "ArrowLeft") n = tabs[(i - 1 + tabs.length) % tabs.length];
+      else if(e.key === "Home") n = tabs[0];
+      else if(e.key === "End") n = tabs[tabs.length - 1];
+      if(!n) return;
+      e.preventDefault(); select(n); n.focus();
+    });
+  });
+})();
+</script>
+</body>
+</html>
